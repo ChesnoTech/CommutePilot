@@ -1,0 +1,17 @@
+export const lineDefinitions = [
+  { id: '1', number: '1', nameRu: 'Сокольническая', nameEn: 'Sokolnicheskaya', color: '#EF1E25' },
+  { id: '2', number: '2', nameRu: 'Замоскворецкая', nameEn: 'Zamoskvoretskaya', color: '#44B85C' },
+  { id: '3', number: '3', nameRu: 'Арбатско-Покровская', nameEn: 'Arbatsko-Pokrovskaya', color: '#0078BE' },
+  { id: '4', number: '4', nameRu: 'Филёвская', nameEn: 'Filyovskaya', color: '#19C1F3' },
+  { id: '5', number: '5', nameRu: 'Кольцевая', nameEn: 'Koltsevaya', color: '#894E35' },
+  { id: '6', number: '6', nameRu: 'Калужско-Рижская', nameEn: 'Kaluzhsko-Rizhskaya', color: '#F58631' },
+  { id: '7', number: '7', nameRu: 'Таганско-Краснопресненская', nameEn: 'Tagansko-Krasnopresnenskaya', color: '#8E479C' },
+  { id: '8', number: '8', nameRu: 'Калининская', nameEn: 'Kalininskaya', color: '#FFCB31' },
+  { id: '8A', number: '8А', nameRu: 'Солнцевская', nameEn: 'Solntsevskaya', color: '#FFCB31' },
+  { id: '9', number: '9', nameRu: 'Серпуховско-Тимирязевская', nameEn: 'Serpukhovsko-Timiryazevskaya', color: '#999999' },
+  { id: '10', number: '10', nameRu: 'Люблинско-Дмитровская', nameEn: 'Lyublinsko-Dmitrovskaya', color: '#B3D445' },
+  { id: '11', number: '11', nameRu: 'Большая кольцевая', nameEn: 'Bolshaya Koltsevaya', color: '#79CDCD' },
+  { id: '12', number: '12', nameRu: 'Бутовская', nameEn: 'Butovskaya', color: '#ACBFE1' },
+  { id: '14', number: '14', nameRu: 'МЦК', nameEn: 'MCC', color: '#ED1B35' },
+  { id: '15', number: '15', nameRu: 'Некрасовская', nameEn: 'Nekrasovskaya', color: '#DE64A1' },
+] as const;

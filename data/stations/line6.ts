@@ -1,0 +1,28 @@
+import { Station } from '../types';
+
+export const line6Stations: Station[] = [
+  { id: '6-01', lineId: '6', order: 1, nameRu: 'Медведково', nameEn: 'Medvedkovo', transfers: [], timeToNext: 120 },
+  { id: '6-02', lineId: '6', order: 2, nameRu: 'Бабушкинская', nameEn: 'Babushkinskaya', transfers: [], timeToNext: 120 },
+  { id: '6-03', lineId: '6', order: 3, nameRu: 'Свиблово', nameEn: 'Sviblovo', transfers: [], timeToNext: 120 },
+  { id: '6-04', lineId: '6', order: 4, nameRu: 'Ботанический сад', nameEn: 'Botanichesky Sad', transfers: ['14'], timeToNext: 120 },
+  { id: '6-05', lineId: '6', order: 5, nameRu: 'ВДНХ', nameEn: 'VDNKh', transfers: ['14'], timeToNext: 120 },
+  { id: '6-06', lineId: '6', order: 6, nameRu: 'Алексеевская', nameEn: 'Alekseevskaya', transfers: [], timeToNext: 120 },
+  { id: '6-07', lineId: '6', order: 7, nameRu: 'Рижская', nameEn: 'Rizhskaya', transfers: ['11', '14'], timeToNext: 120 },
+  { id: '6-08', lineId: '6', order: 8, nameRu: 'Проспект Мира', nameEn: 'Prospekt Mira', transfers: ['5'], timeToNext: 120 },
+  { id: '6-09', lineId: '6', order: 9, nameRu: 'Сухаревская', nameEn: 'Sukharevskaya', transfers: [], timeToNext: 120 },
+  { id: '6-10', lineId: '6', order: 10, nameRu: 'Тургеневская', nameEn: 'Turgenevskaya', transfers: ['1', '10'], timeToNext: 120 },
+  { id: '6-11', lineId: '6', order: 11, nameRu: 'Китай-город', nameEn: 'Kitay-gorod', transfers: ['7'], timeToNext: 120 },
+  { id: '6-12', lineId: '6', order: 12, nameRu: 'Третьяковская', nameEn: 'Tretyakovskaya', transfers: ['2', '8'], timeToNext: 120 },
+  { id: '6-13', lineId: '6', order: 13, nameRu: 'Октябрьская', nameEn: 'Oktyabrskaya', transfers: ['5'], timeToNext: 120 },
+  { id: '6-14', lineId: '6', order: 14, nameRu: 'Шаболовская', nameEn: 'Shabolovskaya', transfers: [], timeToNext: 120 },
+  { id: '6-15', lineId: '6', order: 15, nameRu: 'Ленинский проспект', nameEn: 'Leninsky Prospekt', transfers: [], timeToNext: 120 },
+  { id: '6-16', lineId: '6', order: 16, nameRu: 'Академическая', nameEn: 'Akademicheskaya', transfers: [], timeToNext: 120 },
+  { id: '6-17', lineId: '6', order: 17, nameRu: 'Профсоюзная', nameEn: 'Profsoyuznaya', transfers: [], timeToNext: 120 },
+  { id: '6-18', lineId: '6', order: 18, nameRu: 'Новые Черёмушки', nameEn: 'Novye Cheryomushki', transfers: [], timeToNext: 120 },
+  { id: '6-19', lineId: '6', order: 19, nameRu: 'Калужская', nameEn: 'Kaluzhskaya', transfers: [], timeToNext: 120 },
+  { id: '6-20', lineId: '6', order: 20, nameRu: 'Беляево', nameEn: 'Belyayevo', transfers: [], timeToNext: 120 },
+  { id: '6-21', lineId: '6', order: 21, nameRu: 'Коньково', nameEn: 'Konkovo', transfers: [], timeToNext: 120 },
+  { id: '6-22', lineId: '6', order: 22, nameRu: 'Тёплый Стан', nameEn: 'Tyoply Stan', transfers: [], timeToNext: 120 },
+  { id: '6-23', lineId: '6', order: 23, nameRu: 'Ясенево', nameEn: 'Yasenevo', transfers: [], timeToNext: 120 },
+  { id: '6-24', lineId: '6', order: 24, nameRu: 'Новоясеневская', nameEn: 'Novoyasenevskaya', transfers: ['12'], timeToNext: 0 },
+];

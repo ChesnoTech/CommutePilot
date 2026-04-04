@@ -1,0 +1,26 @@
+import { Station } from '../types';
+
+export const line3Stations: Station[] = [
+  { id: '3-01', lineId: '3', order: 1, nameRu: 'Пятницкое шоссе', nameEn: 'Pyatnitskoe Shosse', transfers: [], timeToNext: 120 },
+  { id: '3-02', lineId: '3', order: 2, nameRu: 'Митино', nameEn: 'Mitino', transfers: [], timeToNext: 120 },
+  { id: '3-03', lineId: '3', order: 3, nameRu: 'Волоколамская', nameEn: 'Volokolamskaya', transfers: [], timeToNext: 120 },
+  { id: '3-04', lineId: '3', order: 4, nameRu: 'Мякинино', nameEn: 'Myakinino', transfers: ['11'], timeToNext: 180 },
+  { id: '3-05', lineId: '3', order: 5, nameRu: 'Строгино', nameEn: 'Strogino', transfers: [], timeToNext: 180 },
+  { id: '3-06', lineId: '3', order: 6, nameRu: 'Крылатское', nameEn: 'Krylatskoe', transfers: [], timeToNext: 150 },
+  { id: '3-07', lineId: '3', order: 7, nameRu: 'Молодёжная', nameEn: 'Molodyozhnaya', transfers: [], timeToNext: 120 },
+  { id: '3-08', lineId: '3', order: 8, nameRu: 'Кунцевская', nameEn: 'Kuntsevskaya', transfers: ['4'], timeToNext: 180 },
+  { id: '3-09', lineId: '3', order: 9, nameRu: 'Славянский бульвар', nameEn: 'Slavyansky Bulvar', transfers: [], timeToNext: 150 },
+  { id: '3-10', lineId: '3', order: 10, nameRu: 'Парк Победы', nameEn: 'Park Pobedy', transfers: ['8A'], timeToNext: 180 },
+  { id: '3-11', lineId: '3', order: 11, nameRu: 'Киевская', nameEn: 'Kievskaya', transfers: ['4', '5'], timeToNext: 120 },
+  { id: '3-12', lineId: '3', order: 12, nameRu: 'Смоленская', nameEn: 'Smolenskaya', transfers: [], timeToNext: 120 },
+  { id: '3-13', lineId: '3', order: 13, nameRu: 'Арбатская', nameEn: 'Arbatskaya', transfers: ['1', '4', '9'], timeToNext: 120 },
+  { id: '3-14', lineId: '3', order: 14, nameRu: 'Площадь Революции', nameEn: 'Ploshchad Revolyutsii', transfers: ['2', '1'], timeToNext: 120 },
+  { id: '3-15', lineId: '3', order: 15, nameRu: 'Курская', nameEn: 'Kurskaya', transfers: ['5', '14'], timeToNext: 150 },
+  { id: '3-16', lineId: '3', order: 16, nameRu: 'Бауманская', nameEn: 'Baumanskaya', transfers: [], timeToNext: 120 },
+  { id: '3-17', lineId: '3', order: 17, nameRu: 'Электрозаводская', nameEn: 'Elektrozavodskaya', transfers: ['14', '11'], timeToNext: 120 },
+  { id: '3-18', lineId: '3', order: 18, nameRu: 'Семёновская', nameEn: 'Semyonovskaya', transfers: [], timeToNext: 120 },
+  { id: '3-19', lineId: '3', order: 19, nameRu: 'Партизанская', nameEn: 'Partizanskaya', transfers: [], timeToNext: 120 },
+  { id: '3-20', lineId: '3', order: 20, nameRu: 'Измайловская', nameEn: 'Izmaylovskaya', transfers: [], timeToNext: 120 },
+  { id: '3-21', lineId: '3', order: 21, nameRu: 'Первомайская', nameEn: 'Pervomayskaya', transfers: [], timeToNext: 120 },
+  { id: '3-22', lineId: '3', order: 22, nameRu: 'Щёлковская', nameEn: 'Shchyolkovskaya', transfers: [], timeToNext: 0 },
+];

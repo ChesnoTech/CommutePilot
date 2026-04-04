@@ -1,0 +1,27 @@
+import { Station } from '../types';
+
+export const line7Stations: Station[] = [
+  { id: '7-01', lineId: '7', order: 1, nameRu: 'Планерная', nameEn: 'Planernaya', transfers: [], timeToNext: 120 },
+  { id: '7-02', lineId: '7', order: 2, nameRu: 'Сходненская', nameEn: 'Skhodnenskaya', transfers: [], timeToNext: 120 },
+  { id: '7-03', lineId: '7', order: 3, nameRu: 'Тушинская', nameEn: 'Tushinskaya', transfers: ['14'], timeToNext: 120 },
+  { id: '7-04', lineId: '7', order: 4, nameRu: 'Спартак', nameEn: 'Spartak', transfers: ['14'], timeToNext: 120 },
+  { id: '7-05', lineId: '7', order: 5, nameRu: 'Щукинская', nameEn: 'Shchukinskaya', transfers: [], timeToNext: 120 },
+  { id: '7-06', lineId: '7', order: 6, nameRu: 'Октябрьское Поле', nameEn: 'Oktyabrskoye Pole', transfers: [], timeToNext: 120 },
+  { id: '7-07', lineId: '7', order: 7, nameRu: 'Полежаевская', nameEn: 'Polezhaevskaya', transfers: ['11'], timeToNext: 120 },
+  { id: '7-08', lineId: '7', order: 8, nameRu: 'Беговая', nameEn: 'Begovaya', transfers: [], timeToNext: 120 },
+  { id: '7-09', lineId: '7', order: 9, nameRu: 'Улица 1905 года', nameEn: 'Ulitsa 1905 Goda', transfers: [], timeToNext: 120 },
+  { id: '7-10', lineId: '7', order: 10, nameRu: 'Баррикадная', nameEn: 'Barrikadnaya', transfers: ['5'], timeToNext: 120 },
+  { id: '7-11', lineId: '7', order: 11, nameRu: 'Пушкинская', nameEn: 'Pushkinskaya', transfers: ['2', '9'], timeToNext: 120 },
+  { id: '7-12', lineId: '7', order: 12, nameRu: 'Кузнецкий Мост', nameEn: 'Kuznetsky Most', transfers: ['1'], timeToNext: 120 },
+  { id: '7-13', lineId: '7', order: 13, nameRu: 'Китай-город', nameEn: 'Kitay-gorod', transfers: ['6'], timeToNext: 120 },
+  { id: '7-14', lineId: '7', order: 14, nameRu: 'Таганская', nameEn: 'Taganskaya', transfers: ['5', '8'], timeToNext: 120 },
+  { id: '7-15', lineId: '7', order: 15, nameRu: 'Пролетарская', nameEn: 'Proletarskaya', transfers: [], timeToNext: 120 },
+  { id: '7-16', lineId: '7', order: 16, nameRu: 'Волгоградский проспект', nameEn: 'Volgogradsky Prospekt', transfers: [], timeToNext: 120 },
+  { id: '7-17', lineId: '7', order: 17, nameRu: 'Текстильщики', nameEn: 'Tekstilshchiki', transfers: ['11'], timeToNext: 120 },
+  { id: '7-18', lineId: '7', order: 18, nameRu: 'Кузьминки', nameEn: 'Kuzminki', transfers: [], timeToNext: 120 },
+  { id: '7-19', lineId: '7', order: 19, nameRu: 'Рязанский проспект', nameEn: 'Ryazansky Prospekt', transfers: [], timeToNext: 120 },
+  { id: '7-20', lineId: '7', order: 20, nameRu: 'Выхино', nameEn: 'Vykhino', transfers: ['15'], timeToNext: 150 },
+  { id: '7-21', lineId: '7', order: 21, nameRu: 'Лермонтовский проспект', nameEn: 'Lermontovsky Prospekt', transfers: [], timeToNext: 120 },
+  { id: '7-22', lineId: '7', order: 22, nameRu: 'Жулебино', nameEn: 'Zhulebino', transfers: [], timeToNext: 120 },
+  { id: '7-23', lineId: '7', order: 23, nameRu: 'Котельники', nameEn: 'Kotelniki', transfers: [], timeToNext: 0 },
+];

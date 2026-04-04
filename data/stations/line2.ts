@@ -1,0 +1,28 @@
+import { Station } from '../types';
+
+export const line2Stations: Station[] = [
+  { id: '2-01', lineId: '2', order: 1, nameRu: 'Ховрино', nameEn: 'Khovrino', transfers: ['11'], timeToNext: 120 },
+  { id: '2-02', lineId: '2', order: 2, nameRu: 'Беломорская', nameEn: 'Belomorskaya', transfers: [], timeToNext: 120 },
+  { id: '2-03', lineId: '2', order: 3, nameRu: 'Речной вокзал', nameEn: 'Rechnoy Vokzal', transfers: [], timeToNext: 120 },
+  { id: '2-04', lineId: '2', order: 4, nameRu: 'Водный стадион', nameEn: 'Vodny Stadion', transfers: [], timeToNext: 120 },
+  { id: '2-05', lineId: '2', order: 5, nameRu: 'Войковская', nameEn: 'Voykovskaya', transfers: ['14'], timeToNext: 150 },
+  { id: '2-06', lineId: '2', order: 6, nameRu: 'Сокол', nameEn: 'Sokol', transfers: [], timeToNext: 120 },
+  { id: '2-07', lineId: '2', order: 7, nameRu: 'Аэропорт', nameEn: 'Aeroport', transfers: [], timeToNext: 120 },
+  { id: '2-08', lineId: '2', order: 8, nameRu: 'Динамо', nameEn: 'Dinamo', transfers: ['14'], timeToNext: 120 },
+  { id: '2-09', lineId: '2', order: 9, nameRu: 'Белорусская', nameEn: 'Belorusskaya', transfers: ['5'], timeToNext: 120 },
+  { id: '2-10', lineId: '2', order: 10, nameRu: 'Маяковская', nameEn: 'Mayakovskaya', transfers: [], timeToNext: 120 },
+  { id: '2-11', lineId: '2', order: 11, nameRu: 'Тверская', nameEn: 'Tverskaya', transfers: ['7', '9'], timeToNext: 120 },
+  { id: '2-12', lineId: '2', order: 12, nameRu: 'Театральная', nameEn: 'Teatralnaya', transfers: ['1', '3'], timeToNext: 120 },
+  { id: '2-13', lineId: '2', order: 13, nameRu: 'Новокузнецкая', nameEn: 'Novokuznetskaya', transfers: ['6', '8'], timeToNext: 120 },
+  { id: '2-14', lineId: '2', order: 14, nameRu: 'Павелецкая', nameEn: 'Paveletskaya', transfers: ['5'], timeToNext: 150 },
+  { id: '2-15', lineId: '2', order: 15, nameRu: 'Автозаводская', nameEn: 'Avtozavodskaya', transfers: [], timeToNext: 180 },
+  { id: '2-16', lineId: '2', order: 16, nameRu: 'Технопарк', nameEn: 'Tekhnopark', transfers: [], timeToNext: 120 },
+  { id: '2-17', lineId: '2', order: 17, nameRu: 'Коломенская', nameEn: 'Kolomenskaya', transfers: [], timeToNext: 150 },
+  { id: '2-18', lineId: '2', order: 18, nameRu: 'Каширская', nameEn: 'Kashirskaya', transfers: ['11'], timeToNext: 120 },
+  { id: '2-19', lineId: '2', order: 19, nameRu: 'Кантемировская', nameEn: 'Kantemirovskaya', transfers: [], timeToNext: 120 },
+  { id: '2-20', lineId: '2', order: 20, nameRu: 'Царицыно', nameEn: 'Tsaritsyno', transfers: ['11'], timeToNext: 120 },
+  { id: '2-21', lineId: '2', order: 21, nameRu: 'Орехово', nameEn: 'Orekhovo', transfers: [], timeToNext: 120 },
+  { id: '2-22', lineId: '2', order: 22, nameRu: 'Домодедовская', nameEn: 'Domodedovskaya', transfers: [], timeToNext: 120 },
+  { id: '2-23', lineId: '2', order: 23, nameRu: 'Красногвардейская', nameEn: 'Krasnogvardeiskaya', transfers: [], timeToNext: 120 },
+  { id: '2-24', lineId: '2', order: 24, nameRu: 'Алма-Атинская', nameEn: 'Alma-Atinskaya', transfers: [], timeToNext: 0 },
+];
