@@ -63,6 +63,38 @@ export default function RouteFinderScreen() {
     setSearched(false);
   };
 
+  const handleSwapStations = () => {
+    if (mode === 'station') {
+      const temp = fromStation;
+      setFromStation(toStation);
+      setToStation(temp);
+    } else {
+      const tempAddr = fromAddress;
+      const tempNearby = fromNearby;
+      const tempStation = fromStation;
+      setFromAddress(toAddress);
+      setFromNearby(toNearby);
+      setFromStation(toStation);
+      setToAddress(tempAddr);
+      setToNearby(tempNearby);
+      setToStation(tempStation);
+    }
+    resetResults();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handleNewSearch = () => {
+    setFromStation(null);
+    setToStation(null);
+    setFromAddress('');
+    setToAddress('');
+    setFromNearby([]);
+    setToNearby([]);
+    setFromError(false);
+    setToError(false);
+    resetResults();
+  };
+
   // Geocode an address and find nearest stations
   const handleGeocodeFrom = useCallback(async () => {
     if (!fromAddress.trim()) return;
@@ -196,11 +228,9 @@ export default function RouteFinderScreen() {
               onClear={() => { setFromStation(null); resetResults(); }}
               markerColor={AppColors.success}
             />
-            <View style={styles.connectionDots}>
-              <View style={styles.dot} />
-              <View style={styles.dot} />
-              <View style={styles.dot} />
-            </View>
+            <Pressable style={styles.swapBtn} onPress={handleSwapStations} hitSlop={12}>
+              <Ionicons name="swap-vertical" size={20} color={AppColors.textSecondary} />
+            </Pressable>
             <StationSearchInput
               placeholder={t('searchTo')}
               selectedStation={toStation}
@@ -255,11 +285,9 @@ export default function RouteFinderScreen() {
               </View>
             )}
 
-            <View style={styles.connectionDots}>
-              <View style={styles.dot} />
-              <View style={styles.dot} />
-              <View style={styles.dot} />
-            </View>
+            <Pressable style={styles.swapBtn} onPress={handleSwapStations} hitSlop={12}>
+              <Ionicons name="swap-vertical" size={20} color={AppColors.textSecondary} />
+            </Pressable>
 
             {/* To address */}
             <View style={styles.addressInputWrap}>
@@ -331,7 +359,12 @@ export default function RouteFinderScreen() {
       {/* Results */}
       {searched && routes.length > 0 && (
         <View style={styles.resultsSection}>
-          <Text style={styles.resultsLabel}>{t('routeResults')}</Text>
+          <View style={styles.resultsHeader}>
+            <Text style={styles.resultsLabel}>{t('routeResults')}</Text>
+            <Pressable onPress={handleNewSearch} hitSlop={12}>
+              <Ionicons name="refresh" size={20} color={AppColors.primary} />
+            </Pressable>
+          </View>
           <FlatList
             data={routes}
             keyExtractor={(_, i) => String(i)}
@@ -406,16 +439,9 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
     zIndex: 10,
   },
-  connectionDots: {
-    alignItems: 'center',
-    paddingVertical: 4,
-    gap: 3,
-  },
-  dot: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: AppColors.textMuted,
+  swapBtn: {
+    alignSelf: 'center',
+    padding: 4,
   },
   // Address mode styles
   addressInputWrap: {
@@ -508,12 +534,17 @@ const styles = StyleSheet.create({
   resultsSection: {
     flex: 1,
   },
+  resultsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Spacing.xs,
+  },
   resultsLabel: {
     color: AppColors.textMuted,
     fontSize: FontSize.xs,
     fontWeight: '700',
     letterSpacing: 1,
-    marginBottom: Spacing.sm,
   },
   emptyState: {
     flex: 1,
