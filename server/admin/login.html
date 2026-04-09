@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommutePilot Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-box">
+      <h1>COMMUTE<span style="color: var(--primary)">PILOT</span></h1>
+      <p class="subtitle">Admin Dashboard</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" required autocomplete="email" placeholder="admin@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="password" required autocomplete="current-password" placeholder="Enter password">
+        </div>
+        <p class="error-msg" id="error" style="display:none"></p>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // If already logged in, redirect
+    if (localStorage.getItem('cp_token')) {
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById('error');
+      errorEl.style.display = 'none';
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorEl.textContent = data.error || 'Login failed';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        if (!data.user.is_admin) {
+          errorEl.textContent = 'Admin access required';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        localStorage.setItem('cp_token', data.token);
+        localStorage.setItem('cp_admin', JSON.stringify(data.user));
+        window.location.href = 'index.html';
+      } catch (err) {
+        errorEl.textContent = 'Connection failed';
+        errorEl.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

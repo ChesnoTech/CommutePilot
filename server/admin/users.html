@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users - CommutePilot Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="logo">COMMUTE<span>PILOT</span></div>
+      <a href="index.html" data-page="dashboard">&#x1F4CA; Dashboard</a>
+      <a href="users.html" data-page="users" class="active">&#x1F465; Users</a>
+      <a href="#" class="logout" onclick="logout()">&#x1F6AA; Logout</a>
+    </nav>
+
+    <main class="main">
+      <h1 class="page-title">Users</h1>
+
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input type="text" id="searchInput" placeholder="Search by email or name..." oninput="debouncedSearch()">
+          <select id="statusFilter" onchange="loadUsers(1)" style="padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Language</th>
+              <th>Status</th>
+              <th>Registered</th>
+              <th>Last Login</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable">
+            <tr><td colspan="8" class="loading">Loading...</td></tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span id="paginationInfo">--</span>
+          <div class="pages" id="paginationBtns"></div>
+        </div>
+      </div>
+
+      <!-- User detail modal -->
+      <div id="userModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:none;align-items:center;justify-content:center">
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+            <h2 id="modalTitle" style="font-size:18px">User Details</h2>
+            <button class="btn btn-sm btn-outline" onclick="closeModal()">Close</button>
+          </div>
+          <div id="modalBody"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    requireAuth();
+
+    let currentPage = 1;
+    let searchTimeout = null;
+
+    function debouncedSearch() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => loadUsers(1), 300);
+    }
+
+    async function loadUsers(page = 1) {
+      currentPage = page;
+      const search = document.getElementById('searchInput').value;
+      const status = document.getElementById('statusFilter').value;
+      const params = new URLSearchParams({ page, limit: 25, search, status });
+
+      const data = await apiFetch(`/api/users?${params}`);
+      if (!data) return;
+
+      const tbody = document.getElementById('usersTable');
+      if (data.users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="loading">No users found</td></tr>';
+      } else {
+        tbody.innerHTML = data.users.map(u => `
+          <tr>
+            <td>${u.id}</td>
+            <td>${u.email}</td>
+            <td>${u.name || '--'}</td>
+            <td>${u.language}</td>
+            <td>
+              ${u.is_active ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-inactive">Inactive</span>'}
+              ${u.is_admin ? ' <span class="badge badge-admin">Admin</span>' : ''}
+            </td>
+            <td>${formatDate(u.created_at)}</td>
+            <td>${timeAgo(u.last_login_at)}</td>
+            <td>
+              <button class="btn btn-sm btn-outline" onclick="viewUser(${u.id})">View</button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Pagination
+      const p = data.pagination;
+      document.getElementById('paginationInfo').textContent = `Showing ${(p.page-1)*p.limit+1}-${Math.min(p.page*p.limit, p.total)} of ${p.total}`;
+
+      const btns = document.getElementById('paginationBtns');
+      btns.innerHTML = '';
+      for (let i = 1; i <= p.totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `btn btn-sm ${i === p.page ? 'btn-primary' : 'btn-outline'}`;
+        btn.textContent = i;
+        btn.onclick = () => loadUsers(i);
+        btns.appendChild(btn);
+      }
+    }
+
+    async function viewUser(id) {
+      const data = await apiFetch(`/api/users/${id}`);
+      if (!data) return;
+
+      const u = data.user;
+      document.getElementById('modalTitle').textContent = u.email;
+      document.getElementById('modalBody').innerHTML = `
+        <div style="display:grid;gap:12px">
+          <div><strong style="color:var(--text2)">ID:</strong> ${u.id}</div>
+          <div><strong style="color:var(--text2)">Email:</strong> ${u.email}</div>
+          <div><strong style="color:var(--text2)">Name:</strong> ${u.name || '--'}</div>
+          <div><strong style="color:var(--text2)">Phone:</strong> ${u.phone || '--'}</div>
+          <div><strong style="color:var(--text2)">Language:</strong> ${u.language}</div>
+          <div><strong style="color:var(--text2)">Device ID:</strong> ${u.device_id || '--'}</div>
+          <div><strong style="color:var(--text2)">Templates:</strong> ${data.templateCount}</div>
+          <div><strong style="color:var(--text2)">Status:</strong>
+            ${u.is_active ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-inactive">Inactive</span>'}
+            ${u.is_admin ? '<span class="badge badge-admin">Admin</span>' : ''}
+          </div>
+          <div><strong style="color:var(--text2)">Registered:</strong> ${formatDate(u.created_at)}</div>
+          <div><strong style="color:var(--text2)">Last Login:</strong> ${timeAgo(u.last_login_at)}</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
+          <button class="btn btn-sm ${u.is_active ? 'btn-danger' : 'btn-primary'}" onclick="toggleUser(${u.id}, ${!u.is_active})">
+            ${u.is_active ? 'Disable' : 'Enable'} User
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteUser(${u.id}, '${u.email}')">
+            Delete User
+          </button>
+        </div>
+      `;
+      document.getElementById('userModal').style.display = 'flex';
+    }
+
+    async function toggleUser(id, isActive) {
+      await apiFetch(`/api/users/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ is_active: isActive }),
+      });
+      closeModal();
+      loadUsers(currentPage);
+    }
+
+    async function deleteUser(id, email) {
+      if (!confirm(`Delete user ${email}? This cannot be undone.`)) return;
+
+      await apiFetch(`/api/users/${id}`, { method: 'DELETE' });
+      closeModal();
+      loadUsers(currentPage);
+    }
+
+    function closeModal() {
+      document.getElementById('userModal').style.display = 'none';
+    }
+
+    // Close modal on background click
+    document.getElementById('userModal').addEventListener('click', (e) => {
+      if (e.target.id === 'userModal') closeModal();
+    });
+
+    loadUsers();
+  </script>
+</body>
+</html>

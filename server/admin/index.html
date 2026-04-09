@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - CommutePilot Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="logo">COMMUTE<span>PILOT</span></div>
+      <a href="index.html" data-page="dashboard" class="active">&#x1F4CA; Dashboard</a>
+      <a href="users.html" data-page="users">&#x1F465; Users</a>
+      <a href="#" class="logout" onclick="logout()">&#x1F6AA; Logout</a>
+    </nav>
+
+    <main class="main">
+      <h1 class="page-title">Dashboard</h1>
+
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <div class="label">Total Users</div>
+          <div class="value" id="totalUsers">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Active Today</div>
+          <div class="value" id="activeToday">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">New This Week</div>
+          <div class="value" id="newThisWeek">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Templates</div>
+          <div class="value" id="totalTemplates">--</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="section">
+          <h3>Signups (Last 30 Days)</h3>
+          <div class="chart-bar" id="signupChart"></div>
+        </div>
+
+        <div class="section">
+          <h3>Language Breakdown</h3>
+          <div id="langBreakdown"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Recent Users</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Language</th>
+              <th>Registered</th>
+              <th>Last Login</th>
+            </tr>
+          </thead>
+          <tbody id="recentUsersTable"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    requireAuth();
+
+    async function loadDashboard() {
+      const data = await apiFetch('/api/stats');
+      if (!data) return;
+
+      const s = data.stats;
+      document.getElementById('totalUsers').textContent = s.totalUsers;
+      document.getElementById('activeToday').textContent = s.activeToday;
+      document.getElementById('newThisWeek').textContent = s.newThisWeek;
+      document.getElementById('totalTemplates').textContent = s.totalTemplates;
+
+      // Signup chart
+      const chart = document.getElementById('signupChart');
+      const maxCount = Math.max(...data.dailySignups.map(d => parseInt(d.count)), 1);
+      chart.innerHTML = '';
+
+      // Fill 30 days
+      const days = {};
+      data.dailySignups.forEach(d => { days[d.date.split('T')[0]] = parseInt(d.count); });
+
+      for (let i = 29; i >= 0; i--) {
+        const date = new Date(Date.now() - i * 86400000).toISOString().split('T')[0];
+        const count = days[date] || 0;
+        const height = Math.max((count / maxCount) * 100, 4);
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = height + '%';
+        bar.title = `${date}: ${count} signups`;
+        chart.appendChild(bar);
+      }
+
+      // Language breakdown
+      const langDiv = document.getElementById('langBreakdown');
+      const langNames = { ru: 'Russian', en: 'English', ar: 'Arabic' };
+      langDiv.innerHTML = data.languageBreakdown.map(l => {
+        const pct = s.totalUsers > 0 ? Math.round((parseInt(l.count) / s.totalUsers) * 100) : 0;
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+          <span>${langNames[l.language] || l.language}</span>
+          <span style="color:var(--primary);font-weight:700">${l.count} (${pct}%)</span>
+        </div>`;
+      }).join('');
+
+      // Recent users
+      const tbody = document.getElementById('recentUsersTable');
+      tbody.innerHTML = data.recentUsers.map(u => `
+        <tr>
+          <td>${u.email}</td>
+          <td>${u.name || '--'}</td>
+          <td>${u.language}</td>
+          <td>${formatDate(u.created_at)}</td>
+          <td>${timeAgo(u.last_login_at)}</td>
+        </tr>
+      `).join('');
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
