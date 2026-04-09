@@ -4,6 +4,7 @@ import { Station } from '@/data/types';
 import { getLineById } from '@/data/metro';
 import { getStationAccessibility } from '@/data/accessibility';
 import { useSettingsStore } from '@/store/useSettingsStore';
+import { useT } from '@/i18n';
 import { AppColors } from '@/constants/colors';
 import { BorderRadius, FontSize, Spacing } from '@/constants/layout';
 
@@ -15,6 +16,7 @@ interface StationItemProps {
 }
 
 export function StationItem({ station, onPress, selected, lineColor }: StationItemProps) {
+  const t = useT();
   const accessProfile = useSettingsStore((s) => s.accessibilityProfile);
   const showToiletInfo = useSettingsStore((s) => s.showToiletInfo);
   const access = getStationAccessibility(station.id);
@@ -28,7 +30,7 @@ export function StationItem({ station, onPress, selected, lineColor }: StationIt
       style={[styles.item, selected && styles.itemSelected]}
       accessible
       accessibilityRole="button"
-      accessibilityLabel={`${station.nameRu}, ${station.nameEn}${selected ? ', selected' : ''}`}
+      accessibilityLabel={`${station.nameRu}, ${station.nameEn}${selected ? `, ${t('accessibilitySelected')}` : ''}`}
       accessibilityState={{ selected }}>
       {/* Metro-style vertical line with station dot */}
       <View style={styles.trackColumn}>
