@@ -56,6 +56,7 @@ export default function RouteFinderScreen() {
   // Route results
   const [routes, setRoutes] = useState<FoundRoute[]>([]);
   const [searched, setSearched] = useState(false);
+  const [searching, setSearching] = useState(false);
 
   const resetResults = () => {
     setRoutes([]);
@@ -106,9 +107,14 @@ export default function RouteFinderScreen() {
   const handleFindRoutes = () => {
     if (!fromStation || !toStation) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    const found = findRoutes(fromStation.station.id, toStation.station.id);
-    setRoutes(found);
-    setSearched(true);
+    setSearching(true);
+    // Use setTimeout to let the loading UI render before computing routes
+    setTimeout(() => {
+      const found = findRoutes(fromStation.station.id, toStation.station.id);
+      setRoutes(found);
+      setSearched(true);
+      setSearching(false);
+    }, 50);
   };
 
   const handleSelectRoute = (route: FoundRoute) => {
@@ -305,10 +311,20 @@ export default function RouteFinderScreen() {
       {/* Find button */}
       {bothSelected && !searched && (
         <Pressable
-          style={({ pressed }) => [styles.findBtn, pressed && { opacity: 0.8, transform: [{ scale: 0.98 }] }]}
-          onPress={handleFindRoutes}>
-          <Ionicons name="search" size={18} color={AppColors.background} />
-          <Text style={styles.findBtnText}>{t('findRoute')}</Text>
+          style={({ pressed }) => [styles.findBtn, searching && { opacity: 0.7 }, pressed && { opacity: 0.8, transform: [{ scale: 0.98 }] }]}
+          onPress={handleFindRoutes}
+          disabled={searching}>
+          {searching ? (
+            <>
+              <ActivityIndicator size="small" color={AppColors.background} />
+              <Text style={styles.findBtnText}>{t('searchingRoutes')}</Text>
+            </>
+          ) : (
+            <>
+              <Ionicons name="search" size={18} color={AppColors.background} />
+              <Text style={styles.findBtnText}>{t('findRoute')}</Text>
+            </>
+          )}
         </Pressable>
       )}
 
@@ -460,9 +476,9 @@ const styles = StyleSheet.create({
   },
   nearbyLineNum: {
     color: AppColors.textSecondary,
-    fontSize: FontSize.xs,
+    fontSize: FontSize.sm,
     fontWeight: '700',
-    width: 22,
+    width: 24,
   },
   nearbyName: {
     flex: 1,
@@ -504,6 +520,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: Spacing.sm,
+    paddingTop: Spacing.xl,
   },
   emptyTitle: {
     color: AppColors.text,
@@ -513,5 +530,7 @@ const styles = StyleSheet.create({
   emptyHint: {
     color: AppColors.textMuted,
     fontSize: FontSize.sm,
+    lineHeight: 20,
+    textAlign: 'center',
   },
 });

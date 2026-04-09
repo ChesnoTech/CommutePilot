@@ -215,6 +215,7 @@ const ru = {
   // Route finder
   routeFinder: 'Поиск маршрута',
   findRoute: 'Найти маршрут',
+  searchingRoutes: 'Поиск маршрутов...',
   searchStationPlaceholder: 'Введите название станции',
   routeResults: 'Варианты маршрута',
   noRoutesFound: 'Маршруты не найдены',
@@ -413,6 +414,7 @@ const en: Record<StringKey, string> = {
 
   routeFinder: 'Route Finder',
   findRoute: 'Find Route',
+  searchingRoutes: 'Searching routes...',
   searchStationPlaceholder: 'Type station name',
   routeResults: 'Route Options',
   noRoutesFound: 'No routes found',
@@ -615,6 +617,7 @@ const ar: Record<StringKey, string> = {
 
   routeFinder: 'البحث عن مسار',
   findRoute: 'ابحث عن مسار',
+  searchingRoutes: 'جاري البحث عن المسارات...',
   searchStationPlaceholder: 'اكتب اسم المحطة',
   routeResults: 'خيارات المسار',
   noRoutesFound: 'لم يتم العثور على مسارات',
