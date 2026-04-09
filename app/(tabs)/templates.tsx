@@ -142,12 +142,12 @@ export default function TemplatesScreen() {
                       </View>
                       <View style={styles.cardActions}>
                         <Pressable
-                          hitSlop={8}
+                          hitSlop={16}
                           onPress={() => router.push({ pathname: '/share-journey', params: { type: 'multileg', id: ml.id } })}>
                           <Ionicons name="share-outline" size={18} color={AppColors.primary} />
                         </Pressable>
                         <Pressable
-                          hitSlop={8}
+                          hitSlop={16}
                           onPress={() => confirmDeleteMultiLeg(ml.id, ml.name)}>
                           <Ionicons name="close-circle-outline" size={18} color={AppColors.textMuted} />
                         </Pressable>

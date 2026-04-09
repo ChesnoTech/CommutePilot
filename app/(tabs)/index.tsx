@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 import { getLineById, getStationById } from '@/data/metro';
 import { checkRouteAccessibility } from '@/data/accessibility';
 import { useJourneyStore } from '@/store/useJourneyStore';
@@ -71,6 +72,7 @@ export default function JourneyScreen() {
   };
 
   const doStartJourney = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     startJourney(selectedLineId!, departureStationId!, destinationStationId!);
     router.push('/active-journey');
   };
@@ -124,7 +126,7 @@ export default function JourneyScreen() {
       {/* Line selector */}
       <Text style={styles.sectionLabel}>{t('sectionLine')}</Text>
       <Pressable
-        style={styles.selectorBtn}
+        style={({ pressed }) => [styles.selectorBtn, pressed && { opacity: 0.7, transform: [{ scale: 0.98 }] }]}
         onPress={() => router.push('/select-line')}>
         {line ? (
           <View style={styles.selectedRow}>
@@ -150,7 +152,7 @@ export default function JourneyScreen() {
 
       {/* Departure */}
       <Pressable
-        style={[styles.selectorBtn, !line && styles.selectorDisabled]}
+        style={({ pressed }) => [styles.selectorBtn, !line && styles.selectorDisabled, pressed && { opacity: 0.7, transform: [{ scale: 0.98 }] }]}
         disabled={!line}
         onPress={() => router.push({ pathname: '/select-station', params: { type: 'departure' } })}>
         {departure ? (
@@ -185,7 +187,7 @@ export default function JourneyScreen() {
 
       {/* Destination */}
       <Pressable
-        style={[styles.selectorBtn, !line && styles.selectorDisabled]}
+        style={({ pressed }) => [styles.selectorBtn, !line && styles.selectorDisabled, pressed && { opacity: 0.7, transform: [{ scale: 0.98 }] }]}
         disabled={!line}
         onPress={() => router.push({ pathname: '/select-station', params: { type: 'destination' } })}>
         {destination ? (

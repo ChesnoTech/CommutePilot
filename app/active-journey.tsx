@@ -3,6 +3,7 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 import { useActiveJourneyStore } from '@/store/useActiveJourneyStore';
 import { useStationTracker } from '@/hooks/useStationTracker';
 import { useAlarm } from '@/hooks/useAlarm';
@@ -55,6 +56,7 @@ export default function ActiveJourneyScreen() {
   };
 
   const handleDismissAlarm = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     dismissAlarm();
   };
 
@@ -134,7 +136,9 @@ export default function ActiveJourneyScreen() {
       {/* Bottom controls */}
       <View style={styles.bottomControls}>
         {!isAtDestination ? (
-          <Pressable style={styles.manualBtn} onPress={manualAdvance}>
+          <Pressable
+            style={({ pressed }) => [styles.manualBtn, pressed && { opacity: 0.8, transform: [{ scale: 0.97 }] }]}
+            onPress={() => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); manualAdvance(); }}>
             <Ionicons name="locate" size={20} color={AppColors.background} />
             <Text style={styles.manualBtnText}>{t('arrivedAtStation')}</Text>
           </Pressable>

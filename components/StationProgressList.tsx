@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming, Easing } from 'react-native-reanimated';
 import { Station } from '@/data/types';
 import { getStationAccessibility } from '@/data/accessibility';
 import { useSettingsStore } from '@/store/useSettingsStore';
@@ -19,6 +20,19 @@ export function StationProgressList({ stations, currentIndex, lineColor }: Stati
   const accessProfile = useSettingsStore((s) => s.accessibilityProfile);
   const showToiletInfo = useSettingsStore((s) => s.showToiletInfo);
   const showAccessIcons = accessProfile !== 'standard';
+
+  const pulseScale = useSharedValue(1);
+  useEffect(() => {
+    pulseScale.value = withRepeat(
+      withTiming(1.6, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+      -1,
+      true
+    );
+  }, [pulseScale]);
+  const pulsingStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pulseScale.value }],
+    opacity: 2 - pulseScale.value,
+  }));
 
   useEffect(() => {
     if (listRef.current && currentIndex >= 0 && currentIndex < stations.length) {
@@ -70,7 +84,7 @@ export function StationProgressList({ stations, currentIndex, lineColor }: Stati
                   <Ionicons name="checkmark" size={10} color="#fff" />
                 )}
                 {isCurrent && (
-                  <View style={styles.pulsingCore} />
+                  <Animated.View style={[styles.pulsingCore, pulsingStyle]} />
                 )}
               </View>
               {!isLast && (

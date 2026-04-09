@@ -1,5 +1,6 @@
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
 import { useSettingsStore, AlarmIntensity, AdvanceWarningStations } from '@/store/useSettingsStore';
 import { useI18nStore, useT, pluralStations } from '@/i18n';
@@ -25,6 +26,7 @@ const PROFILE_ICONS: Record<AccessibilityProfile, keyof typeof Ionicons.glyphMap
 
 export default function SettingsScreen() {
   const t = useT();
+  const insets = useSafeAreaInsets();
   const language = useI18nStore((s) => s.language);
   const setLanguage = useI18nStore((s) => s.setLanguage);
   const alarmIntensity = useSettingsStore((s) => s.alarmIntensity);
@@ -106,7 +108,7 @@ export default function SettingsScreen() {
   ];
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.xl }]}>
       {/* Language section */}
       <Text style={styles.sectionLabel}>
         {language === 'ru' ? 'ЯЗЫК' : language === 'ar' ? 'اللغة' : 'LANGUAGE'}
