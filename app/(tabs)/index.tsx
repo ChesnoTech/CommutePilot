@@ -113,8 +113,12 @@ export default function JourneyScreen() {
       {/* Route finder button */}
       <Pressable
         style={({ pressed }) => [styles.routeFinderBtn, pressed && { opacity: 0.7, transform: [{ scale: 0.98 }] }]}
-        onPress={() => router.push('/route-finder')}>
-        <Ionicons name="search" size={16} color={AppColors.primary} />
+        onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          router.push('/route-finder');
+        }}
+        hitSlop={16}>
+        <Ionicons name="search" size={18} color={AppColors.primary} />
         <Text style={styles.routeFinderText}>{t('findRoute')}</Text>
       </Pressable>
 
@@ -356,13 +360,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     backgroundColor: AppColors.surface,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.xl,
     borderRadius: BorderRadius.full,
     borderWidth: 1,
-    borderColor: AppColors.border,
+    borderColor: AppColors.primary,
     gap: Spacing.xs,
     marginBottom: Spacing.md,
+    zIndex: 10,
+    elevation: 5,
   },
   routeFinderText: {
     color: AppColors.primary,

@@ -47,7 +47,6 @@
       ],
       "expo-audio",
       "expo-sqlite",
-      "expo-barcode-scanner",
       "expo-asset"
     ],
     "experiments": {
