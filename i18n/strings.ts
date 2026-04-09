@@ -226,6 +226,13 @@ const ru = {
   routeVia: 'через',
   searchFrom: 'Откуда',
   searchTo: 'Куда',
+  searchByAddress: 'По адресу',
+  searchByStation: 'По станции',
+  enterAddress: 'Введите адрес',
+  nearestStations: 'Ближайшие станции',
+  geocoding: 'Ищем адрес...',
+  addressNotFound: 'Адрес не найден',
+  kmAway: 'км',
 
   // Units & plurals
   min: 'мин',
@@ -417,6 +424,13 @@ const en: Record<StringKey, string> = {
   routeVia: 'via',
   searchFrom: 'From',
   searchTo: 'To',
+  searchByAddress: 'By address',
+  searchByStation: 'By station',
+  enterAddress: 'Enter address',
+  nearestStations: 'Nearest stations',
+  geocoding: 'Finding address...',
+  addressNotFound: 'Address not found',
+  kmAway: 'km',
 
   min: 'min',
   stAbbr: 'st.',
@@ -612,6 +626,13 @@ const ar: Record<StringKey, string> = {
   routeVia: 'عبر',
   searchFrom: 'من أين',
   searchTo: 'إلى أين',
+  searchByAddress: 'بالعنوان',
+  searchByStation: 'بالمحطة',
+  enterAddress: 'أدخل العنوان',
+  nearestStations: 'أقرب المحطات',
+  geocoding: 'جاري البحث عن العنوان...',
+  addressNotFound: 'العنوان غير موجود',
+  kmAway: 'كم',
 
   stopAbbr: 'محطات',
 };

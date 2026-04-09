@@ -1,5 +1,6 @@
 import { MetroLine, Station } from './types';
 import { lineDefinitions } from './lines';
+import { getStationCoords } from './stationCoordinates';
 import { line1Stations } from './stations/line1';
 import { line2Stations } from './stations/line2';
 import { line3Stations } from './stations/line3';
@@ -154,4 +155,53 @@ export function findTransferStation(
   if (!toStation) return null;
 
   return { from: fromStation, to: toStation };
+}
+
+/* ── Nearest station by GPS ───────────────────────────── */
+
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+export function findNearestStations(
+  lat: number,
+  lng: number,
+  maxResults = 5
+): Array<{ station: Station; line: MetroLine; distanceKm: number }> {
+  const all = getAllStations();
+  const results: Array<{ station: Station; line: MetroLine; distanceKm: number }> = [];
+
+  for (const station of all) {
+    const coords = getStationCoords(station.id);
+    if (!coords) continue;
+    const dist = haversineKm(lat, lng, coords.lat, coords.lng);
+    const line = getLineById(station.lineId);
+    if (line) {
+      results.push({ station, line, distanceKm: dist });
+    }
+  }
+
+  results.sort((a, b) => a.distanceKm - b.distanceKm);
+
+  // Deduplicate: same physical station on different lines — keep closest
+  const seen = new Set<string>();
+  const deduped: typeof results = [];
+  for (const r of results) {
+    const key = `${r.station.nameRu}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      deduped.push(r);
+    }
+    if (deduped.length >= maxResults) break;
+  }
+
+  return deduped;
 }
