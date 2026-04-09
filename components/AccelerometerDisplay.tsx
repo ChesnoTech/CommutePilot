@@ -27,7 +27,7 @@ export function AccelerometerDisplay({ x, y, z, magnitude }: AccelerometerDispla
         </View>
       </View>
       <View style={styles.magnitudeRow}>
-        <Text style={styles.magnitudeLabel}>Magnitude</Text>
+        <Text style={styles.magnitudeLabel}>Ускорение</Text>
         <Text style={styles.magnitudeValue}>{magnitude.toFixed(4)} g</Text>
       </View>
     </View>
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.surface,
     borderRadius: BorderRadius.md,
     padding: Spacing.md,
+    borderWidth: 1,
+    borderColor: AppColors.border,
   },
   row: {
     flexDirection: 'row',
@@ -54,7 +56,8 @@ const styles = StyleSheet.create({
   label: {
     color: AppColors.textMuted,
     fontSize: FontSize.xs,
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 1,
   },
   value: {
     color: AppColors.text,
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: Spacing.md,
     paddingTop: Spacing.md,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: 1,
     borderTopColor: AppColors.border,
   },
   magnitudeLabel: {
@@ -77,9 +80,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.md,
   },
   magnitudeValue: {
-    color: AppColors.accent,
+    color: AppColors.primary,
     fontSize: FontSize.xl,
-    fontWeight: '700',
+    fontWeight: '800',
     fontVariant: ['tabular-nums'],
   },
 });

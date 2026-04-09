@@ -16,8 +16,8 @@ export function DecelerationLog({ events }: DecelerationLogProps) {
   if (events.length === 0) {
     return (
       <View style={styles.empty}>
-        <Text style={styles.emptyText}>No deceleration events detected yet.</Text>
-        <Text style={styles.emptyHint}>Start the sensor and move your phone to test.</Text>
+        <Text style={styles.emptyText}>Торможений пока не обнаружено.</Text>
+        <Text style={styles.emptyHint}>Включите датчик и проверьте в метро.</Text>
       </View>
     );
   }

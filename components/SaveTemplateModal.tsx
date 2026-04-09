@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useT } from '@/i18n';
 import { AppColors } from '@/constants/colors';
 import { BorderRadius, FontSize, Spacing } from '@/constants/layout';
 
@@ -10,6 +11,7 @@ interface SaveTemplateModalProps {
 }
 
 export function SaveTemplateModal({ visible, onSave, onCancel }: SaveTemplateModalProps) {
+  const t = useT();
   const [name, setName] = useState('');
 
   const handleSave = () => {
@@ -28,10 +30,11 @@ export function SaveTemplateModal({ visible, onSave, onCancel }: SaveTemplateMod
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
         <View style={styles.dialog}>
-          <Text style={styles.title}>Save Template</Text>
+          <Text style={styles.title}>{t('saveRoute')}</Text>
+          <Text style={styles.hint}>{t('saveRouteHint')}</Text>
           <TextInput
             style={styles.input}
-            placeholder="e.g. Morning commute"
+            placeholder={t('saveRoutePlaceholder')}
             placeholderTextColor={AppColors.textMuted}
             value={name}
             onChangeText={setName}
@@ -39,13 +42,13 @@ export function SaveTemplateModal({ visible, onSave, onCancel }: SaveTemplateMod
           />
           <View style={styles.buttons}>
             <Pressable style={styles.cancelBtn} onPress={handleCancel}>
-              <Text style={styles.cancelText}>Cancel</Text>
+              <Text style={styles.cancelText}>{t('cancel')}</Text>
             </Pressable>
             <Pressable
               style={[styles.saveBtn, !name.trim() && styles.saveBtnDisabled]}
               onPress={handleSave}
               disabled={!name.trim()}>
-              <Text style={styles.saveText}>Save</Text>
+              <Text style={styles.saveText}>{t('save')}</Text>
             </Pressable>
           </View>
         </View>
@@ -57,7 +60,7 @@ export function SaveTemplateModal({ visible, onSave, onCancel }: SaveTemplateMod
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.7)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: Spacing.lg,
@@ -68,12 +71,19 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
     width: '100%',
     maxWidth: 340,
+    borderWidth: 1,
+    borderColor: AppColors.border,
   },
   title: {
     color: AppColors.text,
-    fontSize: FontSize.lg,
+    fontSize: FontSize.xl,
     fontWeight: '700',
-    marginBottom: Spacing.md,
+  },
+  hint: {
+    color: AppColors.textMuted,
+    fontSize: FontSize.sm,
+    marginTop: Spacing.xs,
+    marginBottom: Spacing.lg,
   },
   input: {
     backgroundColor: AppColors.background,
@@ -91,25 +101,25 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   cancelBtn: {
-    paddingVertical: Spacing.sm,
+    paddingVertical: Spacing.sm + 2,
     paddingHorizontal: Spacing.md,
   },
   cancelText: {
-    color: AppColors.textSecondary,
+    color: AppColors.textMuted,
     fontSize: FontSize.md,
   },
   saveBtn: {
     backgroundColor: AppColors.primary,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.lg,
-    borderRadius: BorderRadius.sm,
+    paddingVertical: Spacing.sm + 2,
+    paddingHorizontal: Spacing.xl,
+    borderRadius: BorderRadius.full,
   },
   saveBtnDisabled: {
-    opacity: 0.4,
+    opacity: 0.35,
   },
   saveText: {
-    color: '#fff',
+    color: AppColors.background,
     fontSize: FontSize.md,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });

@@ -8,17 +8,24 @@
     "scheme": "commutepilot",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "platforms": ["android"],
+    "platforms": [
+      "android"
+    ],
     "android": {
       "package": "com.chesnotech.commutepilot",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#1a1a2e",
+        "backgroundColor": "#0d0d1a",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "permissions": ["HIGH_SAMPLING_RATE_SENSORS"]
+      "permissions": [
+        "HIGH_SAMPLING_RATE_SENSORS",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "output": "static",
@@ -32,16 +39,27 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#1a1a2e",
+          "backgroundColor": "#0d0d1a",
           "dark": {
-            "backgroundColor": "#1a1a2e"
+            "backgroundColor": "#0d0d1a"
           }
         }
-      ]
+      ],
+      "expo-audio",
+      "expo-sqlite",
+      "expo-barcode-scanner",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8d442990-a7a7-4ae9-9ed0-9da0df4bdb44"
+      }
+    },
+    "owner": "chesnotech"
   }
 }

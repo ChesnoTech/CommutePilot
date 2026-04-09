@@ -1,6 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Station } from '@/data/types';
 import { getLineById } from '@/data/metro';
+import { getStationAccessibility } from '@/data/accessibility';
+import { useSettingsStore } from '@/store/useSettingsStore';
 import { AppColors } from '@/constants/colors';
 import { BorderRadius, FontSize, Spacing } from '@/constants/layout';
 
@@ -8,29 +11,70 @@ interface StationItemProps {
   station: Station;
   onPress: () => void;
   selected?: boolean;
+  lineColor?: string;
 }
 
-export function StationItem({ station, onPress, selected }: StationItemProps) {
+export function StationItem({ station, onPress, selected, lineColor }: StationItemProps) {
+  const accessProfile = useSettingsStore((s) => s.accessibilityProfile);
+  const showToiletInfo = useSettingsStore((s) => s.showToiletInfo);
+  const access = getStationAccessibility(station.id);
+
+  // Determine which accessibility icons to show
+  const showAccessIcons = accessProfile !== 'standard';
+
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.item, selected && styles.itemSelected]}>
-      <View style={styles.orderBadge}>
-        <Text style={styles.orderText}>{station.order}</Text>
+      style={[styles.item, selected && styles.itemSelected]}
+      accessible
+      accessibilityRole="button"
+      accessibilityLabel={`${station.nameRu}, ${station.nameEn}${selected ? ', selected' : ''}`}
+      accessibilityState={{ selected }}>
+      {/* Metro-style vertical line with station dot */}
+      <View style={styles.trackColumn}>
+        <View style={[styles.trackLine, { backgroundColor: lineColor ?? AppColors.border }]} />
+        <View style={[
+          styles.stationDot,
+          { borderColor: lineColor ?? AppColors.border },
+          selected && styles.stationDotSelected,
+        ]} />
+        <View style={[styles.trackLine, { backgroundColor: lineColor ?? AppColors.border }]} />
       </View>
+
       <View style={styles.info}>
-        <Text style={styles.nameRu}>{station.nameRu}</Text>
-        <Text style={styles.nameEn}>{station.nameEn}</Text>
+        <Text style={[styles.nameRu, selected && styles.nameRuSelected]}>{station.nameRu}</Text>
+        <View style={styles.nameRow}>
+          <Text style={styles.nameEn}>{station.nameEn}</Text>
+          {/* Accessibility mini-badges */}
+          {showAccessIcons && (
+            <View style={styles.accessIcons}>
+              {access.hasElevator && (
+                <Ionicons name="arrow-up-outline" size={10} color={AppColors.success} />
+              )}
+              {showToiletInfo && access.hasToilet && (
+                <Ionicons name="water-outline" size={10} color={AppColors.primary} />
+              )}
+              {accessProfile === 'vision' && access.hasTactileGuides && (
+                <Ionicons name="hand-left-outline" size={10} color={AppColors.success} />
+              )}
+              {accessProfile === 'wheelchair' && access.hasLevelBoarding && (
+                <Ionicons name="swap-horizontal-outline" size={10} color={AppColors.success} />
+              )}
+            </View>
+          )}
+        </View>
       </View>
+
       {station.transfers.length > 0 && (
         <View style={styles.transfers}>
           {station.transfers.map((lineId) => {
-            const line = getLineById(lineId);
+            const transferLine = getLineById(lineId);
             return (
               <View
                 key={lineId}
-                style={[styles.transferDot, { backgroundColor: line?.color ?? '#888' }]}
-              />
+                style={[styles.transferBadge, { backgroundColor: transferLine?.color ?? '#888' }]}>
+                <Text style={styles.transferText}>{transferLine?.number ?? '?'}</Text>
+              </View>
             );
           })}
         </View>
@@ -43,49 +87,77 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.md,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: AppColors.border,
+    paddingVertical: 0,
+    paddingRight: Spacing.md,
+    minHeight: 56,
   },
   itemSelected: {
-    backgroundColor: AppColors.surfaceLight,
+    backgroundColor: AppColors.accentSoft,
   },
-  orderBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: AppColors.border,
-    justifyContent: 'center',
+  trackColumn: {
+    width: 40,
     alignItems: 'center',
+    alignSelf: 'stretch',
   },
-  orderText: {
-    color: AppColors.textSecondary,
-    fontSize: FontSize.xs,
-    fontWeight: '600',
+  trackLine: {
+    flex: 1,
+    width: 3,
+    opacity: 0.35,
+  },
+  stationDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 3,
+    backgroundColor: AppColors.background,
+  },
+  stationDotSelected: {
+    backgroundColor: AppColors.primary,
+    borderColor: AppColors.primary,
   },
   info: {
     flex: 1,
-    marginLeft: Spacing.md,
+    paddingVertical: Spacing.md,
   },
   nameRu: {
     color: AppColors.text,
     fontSize: FontSize.md,
     fontWeight: '500',
   },
+  nameRuSelected: {
+    color: AppColors.primary,
+    fontWeight: '700',
+  },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    marginTop: 1,
+  },
   nameEn: {
-    color: AppColors.textSecondary,
+    color: AppColors.textMuted,
     fontSize: FontSize.sm,
-    marginTop: 2,
+  },
+  accessIcons: {
+    flexDirection: 'row',
+    gap: 3,
+    marginLeft: 2,
   },
   transfers: {
     flexDirection: 'row',
-    gap: 4,
+    gap: 3,
     paddingLeft: Spacing.sm,
   },
-  transferDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+  transferBadge: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  transferText: {
+    color: '#fff',
+    fontSize: 9,
+    fontWeight: '800',
   },
 });

@@ -3,11 +3,13 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { getLineById } from '@/data/metro';
 import { StationItem } from '@/components/StationItem';
 import { useJourneyStore } from '@/store/useJourneyStore';
+import { useT } from '@/i18n';
 import { AppColors } from '@/constants/colors';
 import { FontSize, Spacing } from '@/constants/layout';
 
 export default function SelectStationScreen() {
   const router = useRouter();
+  const t = useT();
   const { type } = useLocalSearchParams<{ type: 'departure' | 'destination' }>();
   const selectedLineId = useJourneyStore((s) => s.selectedLineId);
   const departureStationId = useJourneyStore((s) => s.departureStationId);
@@ -20,7 +22,7 @@ export default function SelectStationScreen() {
   if (!line) {
     return (
       <View style={styles.empty}>
-        <Text style={styles.emptyText}>Select a line first</Text>
+        <Text style={styles.emptyText}>{t('selectLineFirst')}</Text>
       </View>
     );
   }
@@ -30,11 +32,14 @@ export default function SelectStationScreen() {
   return (
     <View style={styles.container}>
       <View style={[styles.header, { borderBottomColor: line.color }]}>
-        <Text style={[styles.headerLine, { color: line.color }]}>
-          {line.number} {line.nameRu}
-        </Text>
+        <View style={styles.headerRow}>
+          <View style={[styles.lineBadge, { backgroundColor: line.color }]}>
+            <Text style={styles.lineBadgeText}>{line.number}</Text>
+          </View>
+          <Text style={styles.headerLine}>{line.nameRu}</Text>
+        </View>
         <Text style={styles.headerType}>
-          Select {type === 'departure' ? 'departure' : 'destination'} station
+          {type === 'departure' ? t('selectDepartureStation') : t('selectDestinationStation')}
         </Text>
       </View>
       <FlatList
@@ -43,6 +48,7 @@ export default function SelectStationScreen() {
         renderItem={({ item }) => (
           <StationItem
             station={item}
+            lineColor={line.color}
             selected={item.id === currentSelection}
             onPress={() => {
               if (type === 'departure') {
@@ -66,14 +72,33 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: Spacing.md,
-    borderBottomWidth: 2,
+    paddingLeft: Spacing.lg,
+    borderBottomWidth: 3,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  lineBadge: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lineBadgeText: {
+    color: '#fff',
+    fontSize: FontSize.xs,
+    fontWeight: '800',
   },
   headerLine: {
+    color: AppColors.text,
     fontSize: FontSize.lg,
     fontWeight: '700',
   },
   headerType: {
-    color: AppColors.textSecondary,
+    color: AppColors.textMuted,
     fontSize: FontSize.sm,
     marginTop: Spacing.xs,
   },
@@ -84,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    color: AppColors.textSecondary,
+    color: AppColors.textMuted,
     fontSize: FontSize.md,
   },
 });

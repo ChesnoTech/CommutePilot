@@ -15,6 +15,10 @@ import { line11Stations } from './stations/line11';
 import { line12Stations } from './stations/line12';
 import { line14Stations } from './stations/line14';
 import { line15Stations } from './stations/line15';
+import { lineD1Stations } from './stations/lineD1';
+import { lineD2Stations } from './stations/lineD2';
+import { lineD3Stations } from './stations/lineD3';
+import { lineD4Stations } from './stations/lineD4';
 
 const stationsByLine: Record<string, Station[]> = {
   '1': line1Stations,
@@ -32,6 +36,10 @@ const stationsByLine: Record<string, Station[]> = {
   '12': line12Stations,
   '14': line14Stations,
   '15': line15Stations,
+  'D1': lineD1Stations,
+  'D2': lineD2Stations,
+  'D3': lineD3Stations,
+  'D4': lineD4Stations,
 };
 
 export const metroLines: MetroLine[] = lineDefinitions.map((line) => ({

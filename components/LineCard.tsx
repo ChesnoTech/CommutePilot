@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { MetroLine } from '@/data/types';
+import { useT } from '@/i18n';
 import { AppColors } from '@/constants/colors';
 import { BorderRadius, FontSize, Spacing } from '@/constants/layout';
 
@@ -10,6 +11,7 @@ interface LineCardProps {
 }
 
 export function LineCard({ line, onPress, selected }: LineCardProps) {
+  const t = useT();
   return (
     <Pressable
       onPress={onPress}
@@ -22,7 +24,10 @@ export function LineCard({ line, onPress, selected }: LineCardProps) {
         <Text style={styles.nameRu}>{line.nameRu}</Text>
         <Text style={styles.nameEn}>{line.nameEn}</Text>
       </View>
-      <Text style={styles.stationCount}>{line.stations.length} st.</Text>
+      <View style={styles.countBadge}>
+        <Text style={styles.countText}>{line.stations.length}</Text>
+        <Text style={styles.countLabel}>{t('stAbbr')}</Text>
+      </View>
     </Pressable>
   );
 }
@@ -34,21 +39,23 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.surface,
     borderRadius: BorderRadius.md,
     marginHorizontal: Spacing.md,
-    marginVertical: Spacing.xs,
+    marginVertical: Spacing.xs + 1,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: AppColors.border,
   },
   cardSelected: {
-    borderWidth: 2,
-    borderColor: AppColors.accent,
+    borderColor: AppColors.primary,
+    backgroundColor: AppColors.surfaceLight,
   },
   colorBar: {
-    width: 4,
+    width: 5,
     alignSelf: 'stretch',
   },
   badge: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: Spacing.md,
@@ -56,7 +63,7 @@ const styles = StyleSheet.create({
   badgeText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   info: {
     flex: 1,
@@ -65,17 +72,25 @@ const styles = StyleSheet.create({
   },
   nameRu: {
     color: AppColors.text,
-    fontSize: FontSize.md,
+    fontSize: FontSize.lg,
     fontWeight: '600',
   },
   nameEn: {
-    color: AppColors.textSecondary,
+    color: AppColors.textMuted,
     fontSize: FontSize.sm,
     marginTop: 2,
   },
-  stationCount: {
-    color: AppColors.textMuted,
-    fontSize: FontSize.sm,
+  countBadge: {
+    alignItems: 'center',
     paddingRight: Spacing.md,
+  },
+  countText: {
+    color: AppColors.textSecondary,
+    fontSize: FontSize.lg,
+    fontWeight: '700',
+  },
+  countLabel: {
+    color: AppColors.textMuted,
+    fontSize: FontSize.xs,
   },
 });

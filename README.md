@@ -1,50 +1,84 @@
-# Welcome to your Expo app 👋
+# CommutePilot
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Sleep on the metro. Wake up at your stop.**
 
-## Get started
+A Moscow Metro alarm app that works underground where GPS fails. Set your commute once, and CommutePilot wakes you before your station — every single day.
 
-1. Install dependencies
+## The Problem
 
-   ```bash
-   npm install
-   ```
+Moscow Metro has 288+ stations deep underground. GPS does not work. Every existing alarm app fails in the metro. Millions of commuters have no way to set a reliable "wake me at my station" alarm.
 
-2. Start the app
+## How It Works
 
-   ```bash
-   npx expo start
-   ```
+CommutePilot uses sensor fusion to track your position without GPS:
 
-In the output, you'll find options to open the app in a
+- **Accelerometer** — detects train deceleration patterns (braking = arriving at station)
+- **WiFi scanning** — each station has a different WiFi SSID
+- **Time estimation** — average travel time between adjacent stations
+- **Manual fallback** — tap button when arriving at each station
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Progressive Alarm
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| Distance | Alert |
+|----------|-------|
+| 2 stations before | Gentle vibration |
+| 1 station before | Vibration + soft sound |
+| At destination | Full alarm + screen flash |
 
-## Get a fresh project
+## Features
 
-When you're ready, run:
+- **Station Selector** — pick line, departure, and destination from all 288 stations
+- **Russian + English** — full bilingual station names
+- **Journey Templates** — save "Morning commute" / "Evening commute" for one-tap activation
+- **100% Offline** — all data on-device, no internet required, zero data leaves your phone
+- **Accelerometer Debug** — real-time sensor data display for testing and calibration
+
+## Tech Stack
+
+- React Native + Expo (SDK 54)
+- TypeScript
+- Expo Router (file-based navigation)
+- Zustand (state management)
+- expo-sensors (accelerometer)
+- AsyncStorage (template persistence)
+- Android target (RuStore + Google Play)
+
+## Getting Started
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Scan the QR code with Expo Go on your Android device.
 
-## Learn more
+## Metro Coverage
 
-To learn more about developing your project with Expo, look at the following resources:
+15 lines, 288 stations:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+| Line | Name | Stations |
+|------|------|----------|
+| 1 | Sokolnicheskaya | 27 |
+| 2 | Zamoskvoretskaya | 24 |
+| 3 | Arbatsko-Pokrovskaya | 22 |
+| 4 | Filyovskaya | 13 |
+| 5 | Koltsevaya (Ring) | 12 |
+| 6 | Kaluzhsko-Rizhskaya | 24 |
+| 7 | Tagansko-Krasnopresnenskaya | 23 |
+| 8 | Kalininskaya | 8 |
+| 8A | Solntsevskaya | 11 |
+| 9 | Serpukhovsko-Timiryazevskaya | 25 |
+| 10 | Lyublinsko-Dmitrovskaya | 26 |
+| 11 | Bolshaya Koltsevaya | 27 |
+| 12 | Butovskaya | 7 |
+| 14 | MCC | 31 |
+| 15 | Nekrasovskaya | 8 |
 
-## Join the community
+## Links
 
-Join our community of developers creating universal apps.
+- **Landing Page:** https://chesnotech.github.io/commutepilot
+- **Author:** Ayoub Mohamed Samir ([@ChesnoTech](https://github.com/ChesnoTech))
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## License
+
+All rights reserved.

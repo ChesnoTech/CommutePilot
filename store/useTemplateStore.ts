@@ -7,6 +7,7 @@ interface TemplateState {
   templates: JourneyTemplate[];
   addTemplate: (name: string, lineId: string, departureStationId: string, destinationStationId: string) => void;
   removeTemplate: (id: string) => void;
+  renameTemplate: (id: string, newName: string) => void;
 }
 
 export const useTemplateStore = create<TemplateState>()(
@@ -30,6 +31,12 @@ export const useTemplateStore = create<TemplateState>()(
       removeTemplate: (id) =>
         set((state) => ({
           templates: state.templates.filter((t) => t.id !== id),
+        })),
+      renameTemplate: (id, newName) =>
+        set((state) => ({
+          templates: state.templates.map((t) =>
+            t.id === id ? { ...t, name: newName.trim() } : t
+          ),
         })),
     }),
     {

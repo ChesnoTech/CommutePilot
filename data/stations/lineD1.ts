@@ -1,0 +1,31 @@
+import { Station } from '../types';
+
+/** МЦД-1 Белорусско-Савёловский / Belorussko-Savyolovsky (Lobnya — Odintsovo) */
+export const lineD1Stations: Station[] = [
+  { id: 'D1-01', lineId: 'D1', order: 1,  nameRu: 'Лобня',                   nameEn: 'Lobnya',                   transfers: [],                  timeToNext: 240 },
+  { id: 'D1-02', lineId: 'D1', order: 2,  nameRu: 'Шереметьевская',          nameEn: 'Sheremetyevskaya',         transfers: [],                  timeToNext: 180 },
+  { id: 'D1-03', lineId: 'D1', order: 3,  nameRu: 'Хлебниково',              nameEn: 'Khlebnikovo',              transfers: [],                  timeToNext: 180 },
+  { id: 'D1-04', lineId: 'D1', order: 4,  nameRu: 'Водники',                 nameEn: 'Vodniki',                  transfers: [],                  timeToNext: 180 },
+  { id: 'D1-05', lineId: 'D1', order: 5,  nameRu: 'Долгопрудная',            nameEn: 'Dolgoprudnaya',            transfers: [],                  timeToNext: 180 },
+  { id: 'D1-06', lineId: 'D1', order: 6,  nameRu: 'Новодачная',              nameEn: 'Novodachnaya',             transfers: [],                  timeToNext: 150 },
+  { id: 'D1-07', lineId: 'D1', order: 7,  nameRu: 'Марк',                    nameEn: 'Mark',                     transfers: [],                  timeToNext: 150 },
+  { id: 'D1-08', lineId: 'D1', order: 8,  nameRu: 'Лианозово',               nameEn: 'Lianozovo',                transfers: ['10'],              timeToNext: 150 },
+  { id: 'D1-09', lineId: 'D1', order: 9,  nameRu: 'Бескудниково',            nameEn: 'Beskudnikovo',             transfers: [],                  timeToNext: 120 },
+  { id: 'D1-10', lineId: 'D1', order: 10, nameRu: 'Дегунино',                nameEn: 'Degunino',                 transfers: [],                  timeToNext: 150 },
+  { id: 'D1-11', lineId: 'D1', order: 11, nameRu: 'Окружная',                nameEn: 'Okruzhnaya',               transfers: ['10', '14'],        timeToNext: 120 },
+  { id: 'D1-12', lineId: 'D1', order: 12, nameRu: 'Петровско-Разумовская',   nameEn: 'Petrovsko-Razumovskaya',   transfers: ['9', '10', 'D3'],   timeToNext: 120 },
+  { id: 'D1-13', lineId: 'D1', order: 13, nameRu: 'Тимирязевская',           nameEn: 'Timiryazevskaya',          transfers: ['9'],               timeToNext: 120 },
+  { id: 'D1-14', lineId: 'D1', order: 14, nameRu: 'Савёловская',             nameEn: 'Savyolovskaya',            transfers: ['9', '11', 'D2', 'D4'], timeToNext: 180 },
+  { id: 'D1-15', lineId: 'D1', order: 15, nameRu: 'Белорусская',             nameEn: 'Belorusskaya',             transfers: ['2', '5', 'D4'],    timeToNext: 120 },
+  { id: 'D1-16', lineId: 'D1', order: 16, nameRu: 'Беговая',                 nameEn: 'Begovaya',                 transfers: ['7', 'D4'],         timeToNext: 120 },
+  { id: 'D1-17', lineId: 'D1', order: 17, nameRu: 'Тестовская',              nameEn: 'Testovskaya',              transfers: ['4', '8A', '14', 'D4'], timeToNext: 120 },
+  { id: 'D1-18', lineId: 'D1', order: 18, nameRu: 'Фили',                    nameEn: 'Fili',                     transfers: ['4'],               timeToNext: 180 },
+  { id: 'D1-19', lineId: 'D1', order: 19, nameRu: 'Славянский бульвар',      nameEn: 'Slavyansky Bulvar',        transfers: ['3'],               timeToNext: 120 },
+  { id: 'D1-20', lineId: 'D1', order: 20, nameRu: 'Кунцевская',              nameEn: 'Kuntsevskaya',             transfers: ['3', '4', '11'],    timeToNext: 120 },
+  { id: 'D1-21', lineId: 'D1', order: 21, nameRu: 'Рабочий Посёлок',         nameEn: 'Rabochy Posyolok',         transfers: [],                  timeToNext: 120 },
+  { id: 'D1-22', lineId: 'D1', order: 22, nameRu: 'Сетунь',                  nameEn: 'Setun',                    transfers: [],                  timeToNext: 150 },
+  { id: 'D1-23', lineId: 'D1', order: 23, nameRu: 'Немчиновка',              nameEn: 'Nemchinovka',              transfers: [],                  timeToNext: 180 },
+  { id: 'D1-24', lineId: 'D1', order: 24, nameRu: 'Сколково',                nameEn: 'Skolkovo',                 transfers: [],                  timeToNext: 150 },
+  { id: 'D1-25', lineId: 'D1', order: 25, nameRu: 'Баковка',                 nameEn: 'Bakovka',                  transfers: [],                  timeToNext: 180 },
+  { id: 'D1-26', lineId: 'D1', order: 26, nameRu: 'Одинцово',                nameEn: 'Odintsovo',                transfers: [],                  timeToNext: 0 },
+];

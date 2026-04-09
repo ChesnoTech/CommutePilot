@@ -14,4 +14,9 @@ export const lineDefinitions = [
   { id: '12', number: '12', nameRu: 'Бутовская', nameEn: 'Butovskaya', color: '#ACBFE1' },
   { id: '14', number: '14', nameRu: 'МЦК', nameEn: 'MCC', color: '#ED1B35' },
   { id: '15', number: '15', nameRu: 'Некрасовская', nameEn: 'Nekrasovskaya', color: '#DE64A1' },
+  // МЦД — Moscow Central Diameters
+  { id: 'D1', number: 'D1', nameRu: 'МЦД-1 Белорусско-Савёловский', nameEn: 'MCD-1 Belorussko-Savyolovsky', color: '#F6A700' },
+  { id: 'D2', number: 'D2', nameRu: 'МЦД-2 Курско-Рижский', nameEn: 'MCD-2 Kursko-Rizhsky', color: '#E83F83' },
+  { id: 'D3', number: 'D3', nameRu: 'МЦД-3 Ленинградско-Казанский', nameEn: 'MCD-3 Leningradsko-Kazansky', color: '#EA5B04' },
+  { id: 'D4', number: 'D4', nameRu: 'МЦД-4 Калужско-Нижегородский', nameEn: 'MCD-4 Kaluzhsko-Nizhegorodsky', color: '#3FB485' },
 ] as const;
