@@ -100,3 +100,58 @@ export function getStationCount(
   const stations = getStationsBetween(lineId, fromStationId, toStationId);
   return Math.max(0, stations.length - 1);
 }
+
+/* ── Cross-line utilities ─────────────────────────────── */
+
+let _allStationsCache: Station[] | null = null;
+
+export function getAllStations(): Station[] {
+  if (!_allStationsCache) {
+    _allStationsCache = metroLines.flatMap((line) => line.stations);
+  }
+  return _allStationsCache;
+}
+
+export function searchStations(
+  query: string
+): Array<{ station: Station; line: MetroLine }> {
+  if (!query || query.length < 1) return [];
+  const q = query.toLowerCase();
+  const results: Array<{ station: Station; line: MetroLine; priority: number }> = [];
+
+  for (const line of metroLines) {
+    for (const station of line.stations) {
+      const ru = station.nameRu.toLowerCase();
+      const en = station.nameEn.toLowerCase();
+      if (ru.startsWith(q) || en.startsWith(q)) {
+        results.push({ station, line, priority: 0 });
+      } else if (ru.includes(q) || en.includes(q)) {
+        results.push({ station, line, priority: 1 });
+      }
+    }
+  }
+
+  results.sort((a, b) => a.priority - b.priority);
+  return results.slice(0, 20).map(({ station, line }) => ({ station, line }));
+}
+
+export function findTransferStation(
+  fromLineId: string,
+  toLineId: string
+): { from: Station; to: Station } | null {
+  const fromLine = getLineById(fromLineId);
+  const toLine = getLineById(toLineId);
+  if (!fromLine || !toLine) return null;
+
+  const fromStation = fromLine.stations.find((s) =>
+    s.transfers.includes(toLineId)
+  );
+  if (!fromStation) return null;
+
+  const toStation = toLine.stations.find((s) =>
+    s.transfers.includes(fromLineId)
+  );
+  if (!toStation) return null;
+
+  return { from: fromStation, to: toStation };
+}

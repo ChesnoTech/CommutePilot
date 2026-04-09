@@ -110,6 +110,14 @@ export default function JourneyScreen() {
       </View>
       <Text style={styles.subtitle}>{t('appTagline')}</Text>
 
+      {/* Route finder button */}
+      <Pressable
+        style={({ pressed }) => [styles.routeFinderBtn, pressed && { opacity: 0.7, transform: [{ scale: 0.98 }] }]}
+        onPress={() => router.push('/route-finder')}>
+        <Ionicons name="search" size={16} color={AppColors.primary} />
+        <Text style={styles.routeFinderText}>{t('findRoute')}</Text>
+      </Pressable>
+
       {/* Metro Map */}
       <View style={styles.mapContainer}>
         <MetroMap
@@ -341,6 +349,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: Spacing.md,
     letterSpacing: 0.5,
+  },
+  routeFinderBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: AppColors.surface,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.lg,
+    borderRadius: BorderRadius.full,
+    borderWidth: 1,
+    borderColor: AppColors.border,
+    gap: Spacing.xs,
+    marginBottom: Spacing.md,
+  },
+  routeFinderText: {
+    color: AppColors.primary,
+    fontSize: FontSize.sm,
+    fontWeight: '600',
   },
   mapContainer: {
     marginBottom: Spacing.sm,

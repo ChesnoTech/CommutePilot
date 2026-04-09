@@ -212,6 +212,21 @@ const ru = {
   sharedRoute: 'Общий маршрут',
   noRouteToShare: 'Нет маршрута для отправки',
 
+  // Route finder
+  routeFinder: 'Поиск маршрута',
+  findRoute: 'Найти маршрут',
+  searchStationPlaceholder: 'Введите название станции',
+  routeResults: 'Варианты маршрута',
+  noRoutesFound: 'Маршруты не найдены',
+  noRoutesFoundHint: 'Попробуйте выбрать другие станции',
+  directRoute: 'Прямой маршрут',
+  transferCount: 'Пересадки',
+  transferAt: 'Пересадка',
+  selectRoute: 'Выбрать',
+  routeVia: 'через',
+  searchFrom: 'Откуда',
+  searchTo: 'Куда',
+
   // Units & plurals
   min: 'мин',
   stAbbr: 'ст.',
@@ -388,6 +403,20 @@ const en: Record<StringKey, string> = {
   draftRoute: 'Draft Route',
   sharedRoute: 'Shared Route',
   noRouteToShare: 'No route to share',
+
+  routeFinder: 'Route Finder',
+  findRoute: 'Find Route',
+  searchStationPlaceholder: 'Type station name',
+  routeResults: 'Route Options',
+  noRoutesFound: 'No routes found',
+  noRoutesFoundHint: 'Try different stations',
+  directRoute: 'Direct route',
+  transferCount: 'Transfers',
+  transferAt: 'Transfer at',
+  selectRoute: 'Select',
+  routeVia: 'via',
+  searchFrom: 'From',
+  searchTo: 'To',
 
   min: 'min',
   stAbbr: 'st.',
@@ -569,6 +598,20 @@ const ar: Record<StringKey, string> = {
   draftRoute: 'مسودة المسار',
   sharedRoute: 'مسار مشترك',
   noRouteToShare: 'لا يوجد مسار للمشاركة',
+
+  routeFinder: 'البحث عن مسار',
+  findRoute: 'ابحث عن مسار',
+  searchStationPlaceholder: 'اكتب اسم المحطة',
+  routeResults: 'خيارات المسار',
+  noRoutesFound: 'لم يتم العثور على مسارات',
+  noRoutesFoundHint: 'حاول اختيار محطات مختلفة',
+  directRoute: 'مسار مباشر',
+  transferCount: 'التحويلات',
+  transferAt: 'التحويل في',
+  selectRoute: 'اختر',
+  routeVia: 'عبر',
+  searchFrom: 'من أين',
+  searchTo: 'إلى أين',
 
   stopAbbr: 'محطات',
 };

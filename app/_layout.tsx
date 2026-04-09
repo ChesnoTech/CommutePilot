@@ -52,6 +52,10 @@ export default function RootLayout() {
             presentation: 'modal',
           }}
         />
+        <Stack.Screen
+          name="route-finder"
+          options={{ headerShown: false, presentation: 'modal' }}
+        />
       </Stack>
       <StatusBar style="light" />
     </SafeAreaProvider>
