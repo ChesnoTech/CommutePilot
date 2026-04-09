@@ -54,7 +54,7 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="route-finder"
-          options={{ headerShown: false, presentation: 'modal' }}
+          options={{ headerShown: false, presentation: 'card' }}
         />
       </Stack>
       <StatusBar style="light" />

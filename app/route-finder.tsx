@@ -1,8 +1,10 @@
 import { useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -187,7 +189,10 @@ export default function RouteFinderScreen() {
   const bothSelected = fromStation && toStation;
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 8, paddingBottom: insets.bottom }]}>
+    <KeyboardAvoidingView
+      style={[styles.container, { paddingTop: insets.top + 8, paddingBottom: insets.bottom }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={0}>
       {/* Header */}
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} hitSlop={16}>
@@ -196,6 +201,12 @@ export default function RouteFinderScreen() {
         <Text style={styles.headerTitle}>{t('routeFinder')}</Text>
         <View style={{ width: 24 }} />
       </View>
+
+      <ScrollView
+        style={styles.scrollContent}
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}>
 
       {/* Mode toggle */}
       <View style={styles.modeToggle}>
@@ -365,14 +376,9 @@ export default function RouteFinderScreen() {
               <Ionicons name="refresh" size={20} color={AppColors.primary} />
             </Pressable>
           </View>
-          <FlatList
-            data={routes}
-            keyExtractor={(_, i) => String(i)}
-            keyboardShouldPersistTaps="handled"
-            renderItem={({ item }) => (
-              <RouteCard route={item} onSelect={() => handleSelectRoute(item)} />
-            )}
-          />
+          {routes.map((item, i) => (
+            <RouteCard key={String(i)} route={item} onSelect={() => handleSelectRoute(item)} />
+          ))}
         </View>
       )}
 
@@ -384,7 +390,9 @@ export default function RouteFinderScreen() {
           <Text style={styles.emptyHint}>{t('noRoutesFoundHint')}</Text>
         </View>
       )}
-    </View>
+
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -393,6 +401,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppColors.background,
     paddingHorizontal: Spacing.lg,
+  },
+  scrollContent: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: Spacing.xl,
   },
   header: {
     flexDirection: 'row',
@@ -464,7 +479,8 @@ const styles = StyleSheet.create({
     flex: 1,
     color: AppColors.text,
     fontSize: FontSize.md,
-    paddingVertical: 4,
+    paddingVertical: 8,
+    minHeight: 40,
   },
   errorText: {
     color: AppColors.error,
@@ -532,7 +548,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   resultsSection: {
-    flex: 1,
+    marginTop: Spacing.sm,
   },
   resultsHeader: {
     flexDirection: 'row',
