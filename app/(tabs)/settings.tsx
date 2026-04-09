@@ -111,7 +111,7 @@ export default function SettingsScreen() {
     <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.xl }]}>
       {/* Language section */}
       <Text style={styles.sectionLabel}>
-        {language === 'ru' ? 'ЯЗЫК' : language === 'ar' ? 'اللغة' : 'LANGUAGE'}
+        {t('sectionLanguage')}
       </Text>
 
       <View style={styles.card}>

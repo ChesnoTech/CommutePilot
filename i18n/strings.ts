@@ -115,6 +115,7 @@ const ru = {
   stationNow: 'СЕЙЧАС',
 
   // Settings
+  sectionLanguage: 'ЯЗЫК',
   sectionAlarm: 'БУДИЛЬНИК',
   alarmVolume: 'Громкость будильника',
   alarmVolumeHint: 'Управляет силой вибрации и громкостью звука',
@@ -330,6 +331,7 @@ const en: Record<StringKey, string> = {
   alarmRemaining: 'Remaining',
   alarmDismiss: 'Got it',
   stationNow: 'NOW',
+  sectionLanguage: 'LANGUAGE',
   sectionAlarm: 'ALARM',
   alarmVolume: 'Alarm volume',
   alarmVolumeHint: 'Controls vibration strength and sound volume',
@@ -529,6 +531,7 @@ const ar: Record<StringKey, string> = {
   alarmRemaining: 'متبقي',
   alarmDismiss: 'حسناً',
   stationNow: 'الآن',
+  sectionLanguage: 'اللغة',
   sectionAlarm: 'المنبه',
   alarmVolume: 'مستوى صوت المنبه',
   alarmVolumeHint: 'يتحكم في قوة الاهتزاز ومستوى الصوت',

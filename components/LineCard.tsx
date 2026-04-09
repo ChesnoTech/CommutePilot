@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { MetroLine } from '@/data/types';
 import { useT } from '@/i18n';
@@ -10,7 +11,7 @@ interface LineCardProps {
   selected?: boolean;
 }
 
-export function LineCard({ line, onPress, selected }: LineCardProps) {
+export const LineCard = memo(function LineCard({ line, onPress, selected }: LineCardProps) {
   const t = useT();
   return (
     <Pressable
@@ -30,7 +31,7 @@ export function LineCard({ line, onPress, selected }: LineCardProps) {
       </View>
     </Pressable>
   );
-}
+});
 
 const styles = StyleSheet.create({
   card: {

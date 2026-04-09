@@ -30,7 +30,6 @@ export default function ActiveJourneyScreen() {
   const dismissAlarm = useActiveJourneyStore((s) => s.dismissAlarm);
 
   const {
-    currentStation,
     remainingStations,
     elapsedSeconds,
     estimatedTimeRemaining,
@@ -83,11 +82,9 @@ export default function ActiveJourneyScreen() {
 
   // Next station name for alarm overlay
   const alarmStationName =
-    alarmPhase === 'full'
+    alarmPhase === 'full' || alarmPhase === 'warning'
       ? destinationStation?.nameRu ?? ''
-      : alarmPhase === 'warning'
-        ? destinationStation?.nameRu ?? ''
-        : journey.stations[Math.min(journey.currentStationIndex + 2, journey.totalStations - 1)]?.nameRu ?? '';
+      : journey.stations[Math.min(journey.currentStationIndex + 2, journey.totalStations - 1)]?.nameRu ?? '';
 
   return (
     <View style={[styles.container, { paddingTop: insets.top + 8, paddingBottom: insets.bottom }]}>

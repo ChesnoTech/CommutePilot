@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getLineById, getStationById, calculateTravelTime, getStationCount } from '@/data/metro';
@@ -11,7 +12,7 @@ interface JourneySummaryProps {
   destinationStationId: string;
 }
 
-export function JourneySummary({ lineId, departureStationId, destinationStationId }: JourneySummaryProps) {
+export const JourneySummary = memo(function JourneySummary({ lineId, departureStationId, destinationStationId }: JourneySummaryProps) {
   const line = getLineById(lineId);
   const departure = getStationById(departureStationId);
   const destination = getStationById(destinationStationId);
@@ -57,7 +58,7 @@ export function JourneySummary({ lineId, departureStationId, destinationStationI
       </View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
